@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .gallery-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .gallery-row.selected {
+            background-color: #333333;
+        }
+        .gallery-item {
+            margin-right: 10px;
+        }
+        .gallery-item img {
+            max-width: 200px;
+            border: 3px solid #333;
+            border-radius: 5px;
+        }
+        .text-field {
+            flex-grow: 1;
+            width: 100%;
+            height: 100px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .update-container {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #8700ff;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+        @keyframes zoom {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    <form action="/save" method="post">
+        <input type="hidden" name="directory" value="{{ directory }}">
+
+        <!-- Update Text Section -->
+        <div class="update-container">
+            <input type="text" id="update-text" placeholder="Enter text to append to selected fields">
+            <button type="button" onclick="updateSelectedTextFields()">Update Selected</button>
+        </div>
+
+        <div class="container">
+            {% for image, text in images_with_text %}
+                <div class="gallery-row" onclick="selectRow(this)">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('images', filename=image) }}?directory={{ directory }}" alt="{{ image }}" onclick="openModal(this)">
+                    </div>
+                    <textarea class="text-field" name="text_{{ image }}">{{ text }}</textarea>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        function openModal(img) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+
+            modal.style.display = "block";
+            modalImg.src = img.src;
+            captionText.innerHTML = img.alt;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        function selectRow(row) {
+            row.classList.toggle('selected');
+        }
+
+        function updateSelectedTextFields() {
+            var appendText = document.getElementById('update-text').value;
+            var selectedRows = document.querySelectorAll('.gallery-row.selected');
+            selectedRows.forEach(row => {
+                var textField = row.querySelector('.text-field');
+                if (!textField.value.trim().endsWith(',')) {
+                    textField.value += ', ';
+                }
+                textField.value += appendText;
+            });
+        }
+    </script>
+</body>
+</html>
