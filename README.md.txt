@@ -1,4 +1,4 @@
-# Caption Editor Utility
+# Caption Utility
 
 ## Overview
 This code exists as an experiment in using ChatGPT for code generation. The rest of this file, and almost all files, were made by ChatGPT.
@@ -21,12 +21,12 @@ Before you begin, ensure you have met the following requirements:
 - pip and virtualenv (recommended)
 
 ### Setup
-To install Caption Editor Utility, follow these steps:
+To install Caption Utility, follow these steps:
 
 Linux and macOS:
 ```bash
-git clone https://github.com/jenomega/caption_editor_utility.git
-cd caption_editor_utility
+git clone https://github.com/jenomega/caption_utility.git
+cd caption_utility
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
