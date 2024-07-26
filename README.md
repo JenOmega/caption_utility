@@ -1,9 +1,9 @@
 # Caption Utility
 
 ## Overview
-This code exists as an experiment in using ChatGPT for code generation. The rest of this file, and almost all files, were made by ChatGPT.
+This code exists as an experiment in using ChatGPT for code generation. Most of this file, and almost all the other content, was made by ChatGPT.
 
-The use case is captioning files for Stable Diffusion.  I got frustrated by manually creating .txt files, opening images one at a time and adding the same caption to a batch of them, etc. So I fired up ChatGPT and asked it to help me make a python project that would open my image folder and edit all the captions with a web interface. Et voila, it does. This took about an hour.
+The use case is captioning files for Stable Diffusion.  I got frustrated by manually creating .txt files, opening images one at a time and adding the same caption to a batch of them, etc. So I fired up ChatGPT and asked it to help me make a python project that would open my image folder and edit all the captions with a web interface. Et voila, it does.
 
 It took about an hour to do this whole thing, and I've never written python before. I never heard of flask before I started it.  I do intend to add more features as I use it. 
 
@@ -30,3 +30,8 @@ cd caption_utility
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+You can run it by executing app.py and then navigating to http://127.0.0.1:5000/  It looks something like this
+
+[image](https://github.com/user-attachments/assets/e422d7b9-ce32-4f34-ad22-6ff3ee51ef3f)
