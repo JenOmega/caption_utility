@@ -153,17 +153,26 @@
         }
 
         function updateSelectedTextFields() {
-            var appendText = document.getElementById('update-text').value;
-            var selectedRows = document.querySelectorAll('.gallery-row.selected');
-            selectedRows.forEach(row => {
-                var textField = row.querySelector('.text-field');
-                var currentText = textField.value.trim();
-                if (currentText && !currentText.endsWith(', ') && !currentText.endsWith(',')) {
-                    textField.value += ', ';
-                }
-                textField.value += appendText; // Append the text
-            });
+    var appendText = document.getElementById('update-text').value;
+    var selectedRows = document.querySelectorAll('.gallery-row.selected');
+    selectedRows.forEach(row => {
+        var textField = row.querySelector('.text-field');
+        // Trim the existing text to remove unwanted whitespace and newlines
+        var currentText = textField.value.replace(/\s+/g, ' ').trim();
+        // Check if the current text ends with a comma and space, add them if not present
+        if (currentText && !currentText.endsWith(', ')) {
+            // Ensure there's no trailing comma without space
+            if (currentText.endsWith(',')) {
+                currentText += ' ';
+            } else {
+                currentText += ', ';
+            }
         }
+        // Append the new text and update the textarea
+        textField.value = currentText + appendText;
+    });
+}
+
 
         function filterImages() {
             var filterText = document.getElementById('filter-text').value.toLowerCase();
